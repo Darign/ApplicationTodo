@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>       
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>App Todo</title>           
+    <link rel="stylesheet" type="text/css" href="./css/style.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />       
+    <script src="https://cdn.jsdelivr.net/npm/vue-toast-notification@0.6"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vue-toast-notification@0.6.3/dist/theme-sugar.css" rel="stylesheet">
+  </head>
+  <body class="bg-success">
+    <div class="container">
+      <div class="row">
+        <div class="col">          
+        </div>        
+        <div class="col-sm-2 col-md-6">
+          <h1 class="p-2 text-white text-center">Lista de tareas</h1>      
+          <div class="card" id="app">                        
+            <div class="card-body">              
+              <form class="needs-validation" v-on:submit.prevent="addNote()"> 
+                <input class="form-control" type="text" placeholder="Ingrese una tarea ..." v-model="text_input" :maxLength="max_length"/>
+                <p v-if="errors.length">                  
+                  <ul>                    
+                    <li class="invalid" v-for="error in errors">{{ error }}</li>                    
+                  </ul>
+                </p>
+                <button class="btn btn-primary btn-sm" type="submit" >Agregar tarea</button>                 
+              </form>
+            <div class="table-responsive" v-if="loaded==false">
+              <div v-if="notes.length > 0">
+                <table class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tarea</th>
+                    <th scope="col">Opciones</th>            
+                  </tr>
+                </thead>
+                <tbody>                                  
+                  <tr v-for="(item,index) of paginate_data">
+                    <th class="col-1 justify-content-start text-start" scope="row">{{ 1 + index + calculatedIndex }}</th>
+                    <td class="col overflow-ellipsis selectionable" v-on:click="editNote(item.note)">{{ item.note }}</td>
+                    <td class="col-4 text-right">
+                      <button class="btn btn-outline-success btn-sm" v-on:click="updateNote( index + calculatedIndex )">Actualizar</button>                      
+                      <button class="btn btn-outline-danger btn-sm" v-on:click="deleteNote( index + calculatedIndex )" >Borrar</button>
+                    </td>     
+                  </tr>          
+                </tbody>
+                </table>              
+              </div>
+              <div v-else class="text-center">No hay notas para mostrar...</div>     
+              <nav aria-label="Page navigation example" v-if="notes.length > 10">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" v-on:click="getPreviousPage()"><a class="page-link" href="#">Anterior</a></li>                
+                  <li v-for="page in totalPages()" v-on:click="getDataPage(page)" class="page-item" v-bind:class="isActive(page)"><a class="page-link" href="#">{{ page }}</a></li>
+                  <li class="page-item" v-on:click="getNextPage()"><a class="page-link" href="#">Siguiente</a></li>
+                </ul>
+              </nav>
+                                   
+            </div>
+            <div v-else>Cargando ...</div>
+            </div>
+          </div>                      
+        </div>
+        <div class="col">          
+        </div>
+      </div>
+    </div>
+    </div>    
+    <script type="text/javascript" src="./vendor/vue.js"></script>    
+    <script type="text/javascript" src="./js/todo.js"></script>              
+  </body>
+</html>

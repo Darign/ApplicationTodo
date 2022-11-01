@@ -1,0 +1,12 @@
+.invalid {
+  color: red;
+}
+
+.overflow-ellipsis {
+  text-overflow: ellipsis ;
+  max-width: 100px;
+}
+
+.selectionable {
+  cursor: pointer;
+}
