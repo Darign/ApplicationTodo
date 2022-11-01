@@ -1,5 +1,6 @@
 :: Creación de los directorios
 MD .\web\backend\
+MD .\web\backend\database\
 MD .\web\backend\lib\
 MD .\web\backend\lib\actions\
 
